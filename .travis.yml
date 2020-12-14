@@ -17,4 +17,4 @@ deploy:
     heroku coontainer:login;
     heroku coonteiner:push web -a $HEROKU_APP_NAME;
     heroku container:release web -a $HEROKU_APP_NAME;
-  branch: master
+  branch: main
