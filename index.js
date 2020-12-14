@@ -50,7 +50,7 @@ app.post(BASE_API_PATH + "/clients", (req, res) => {
     });
 });
 
-app.put(BASE_API_PATH + "/clients/:clientName", (req, res) => {
+app.put(BASE_API_PATH + "/clients", (req, res) => {
     console.log(Date() + " - PUT /clients");
     var contact = req.body;
     db.update(req.body._id, contact, (err)=>{
