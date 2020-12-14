@@ -62,7 +62,6 @@ app.put(BASE_API_PATH + "/clients", (req, res) => {
             res.sendStatus(201);
         }
     });
-    
 });
 
 app.listen(port);
