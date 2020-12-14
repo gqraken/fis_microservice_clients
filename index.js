@@ -50,12 +50,12 @@ app.post(BASE_API_PATH + "/clients", (req, res) => {
     });
 });
 
-app.put(BASE_API_PATH + "/clients", (req, res) => {
+app.put(BASE_API_PATH + "/clients/:id", (req, res) => {
     console.log(Date() + " - PUT /clients");
     var contact = req.body;
     //Arreglar el .update para que coja bien el _id en formato JSON
     db.update({
-        _id: parseInt(req.body.id)
+        _id: parseInt(req.params.id)
       }, req.body, {}, function (
         err
       ) {
