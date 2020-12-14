@@ -54,15 +54,15 @@ app.put(BASE_API_PATH + "/clients", (req, res) => {
     console.log(Date() + " - PUT /clients");
     var contact = req.body;
     //Arreglar el .update para que coja bien el _id en formato JSON
-    db.update({_id: parseInt(req.body.id)}, contact, (err)=>{
-        if(err){
-            console.log(Date()+ " - "+ err);
-            res.sendStatus(500);
-        }else{
-            res.sendStatus(201);
-        }
+    db.update({
+        _id: parseInt(req.body.id)
+      }, req.body, {}, function (
+        err
+      ) {
+        if ( err ) res.status( 500 ).send( err );
+        else res.sendStatus( 200 );
+      } );
     });
-});
 
 app.listen(port);
 
