@@ -64,6 +64,21 @@ app.put(BASE_API_PATH + "/clients/:id", (req, res) => {
       } );
     });
 
+    app.delete(BASE_API_PATH + "/clients/:id", (req, res) => {
+        console.log(Date() + " - DELETE /clients");
+        
+        //Arreglar el .update para que coja bien el _id en formato JSON
+        db.remove({
+            _id: parseInt(req.id)
+          }, {}, function (
+            err
+          ) {
+            if ( err ) res.status( 500 ).send( err );
+            else res.sendStatus( 200 );
+          } );
+        });
+    
+
 app.listen(port);
 
 console.log("Server ready!");
