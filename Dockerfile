@@ -12,7 +12,7 @@ COPY server.js .
 COPY db.js .
 COPY clients.js .
 COPY auth.js .
-COPY validation.js .
+COPY validations.js .
 COPY .env .
 
 EXPOSE 3000:3000
