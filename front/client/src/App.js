@@ -1,6 +1,7 @@
 //import logo from './logo.svg';
 //import './App.css';
 import React from "react";
+import Client from "../../../clients"
 
 
 class App extends React.Component {
@@ -22,9 +23,23 @@ class App extends React.Component {
   }
   //eliminar un cliente
   removeClient = (client) => {
-    
+
   }
-  return ()
+  render(){
+  return (
+  <div className="client">
+    <header>
+      <a href="/">Client</a>
+    </header>
+    <main>
+      <div className= "content">
+        <div className= "main">
+          
+        </div>
+      </div>
+    </main>
+  </div>);
+  }
 }
 
 export default App;
