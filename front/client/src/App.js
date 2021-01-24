@@ -1,29 +1,57 @@
 //import logo from './logo.svg';
 //import './App.css';
-import React from "react";
-import Client from "../../../clients"
-
+import React from 'react';
+import ClientApi from './ClientApi';
 
 class App extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props);
+    this.state = {
+      errorInfo: null,
+      clients: [client],
+      client : {username, password, firstName, lastName, address, email, phone}
+      
+    };
+    this.selectClients = this.selectClients.bind(this);
+    this.createClient = this.createClient.bind(this);
+    this.editClient = this.editClient.bind(this);
+    this.removeClient = this.removeClient.bind(this);
+  }
 
+  componentDidMount() {
+    ClientApi.getAllClients()
+      .then(
+        (result) => {
+          this.setState({
+            clients: result
+          })
+        },
+        (error) => {
+          this.setState({
+            errorInfo: "Problem while trying to connect to server"
+          })
+        }
+      )
   }
   //leer los clientes
-  selectClient = (client) => {
-
+  selectClients() {
+    ClientApi.getAllClients() = result;
+    this.setState({clients : result});
   }
-  //anadir un cliente
-  createClient = (client) => {
-
+  //añadir un cliente
+  createClient(client) {
+    ClientApi.postClient(client);
+    this.setState({clients : result});
   }
   //modificar un cliente
-  editClient = (client) => {
-
+  editClient(client) {
+    ClientApi.putClient(client);
+    this.setState({clients : result});
   }
   //eliminar un cliente
-  removeClient = (client) => {
-
+  removeClient(client) {
+    ClientApi.deleteClient(client);
+    this.setState({clients : result});
   }
   render(){
   return (
@@ -34,7 +62,27 @@ class App extends React.Component {
     <main>
       <div className= "content">
         <div className= "main">
-          
+          <form onSubmit={this.selectClients}>
+            <label>
+              Añadir un cliente :
+              <input type="text" value={this.state.client.username} onChange={this.createClient}/>
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <form onSubmit={this.selectClients}>
+            <label>
+              Modificar un cliente :
+              <input type="text" value={this.state.client.username} onChange={this.editClient}/>
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <form onSubmit={this.selectClients}>
+            <label>
+              Eliminar un cliente :
+              <input type="text" value={this.state.client.username} onChange={this.removeClient}/>
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
         </div>
       </div>
     </main>
