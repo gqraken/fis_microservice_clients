@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
     res.send("<html><body><h1>My clients server</h1></body></html>");
 });
 
-app.get(process.env.VERSION + "/clients", authValidation, (req, res) => {
+app.get(process.env.VERSION + "/clients", (req, res) => {
     console.log(Date() + " - GET /clients");
     Client.find({}, (err,clients)=> {
         if(err){
