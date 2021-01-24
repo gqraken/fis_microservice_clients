@@ -21,7 +21,20 @@ app.get("/", (req, res) => {
     res.send("<html><body><h1>My clients server</h1></body></html>");
 });
 
-app.get(process.env.VERSION + "/clients", authValidation, (req, res) => {
+app.post(BASE_API_PATH + "/clients", (req, res) => {
+  console.log(Date() + " - POST /clients");
+  var client = req.body;
+  Client.create(client, (err)=>{
+      if(err){
+          console.log(Date()+ " - "+ err);
+          res.sendStatus(500);
+      }else{
+          res.sendStatus(201);
+      }
+  });
+});
+
+app.get(process.env.VERSION + "/clients",  (req, res) => {
     console.log(Date() + " - GET /clients");
     Client.find({}, (err,clients)=> {
         if(err){
