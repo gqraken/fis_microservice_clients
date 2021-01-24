@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const cors = require('cors');
 const Client = require('./clients');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
