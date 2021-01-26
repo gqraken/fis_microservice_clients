@@ -65,6 +65,12 @@ class App extends React.Component {
             <label>
               Añadir un cliente :
               <input type="text" value={this.state.client.username} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.password} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.firstName} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.lastName} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.address} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.email} onChange={this.createClient}/>
+              <input type="text" value={this.state.client.phone} onChange={this.createClient}/>
             </label>
             <input type="submit" value="Submit" />
           </form>
@@ -72,6 +78,12 @@ class App extends React.Component {
             <label>
               Modificar un cliente :
               <input type="text" value={this.state.client.username} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.password} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.firstName} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.lastName} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.address} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.email} onChange={this.editClient}/>
+              <input type="text" value={this.state.client.phone} onChange={this.editClient}/>
             </label>
             <input type="submit" value="Submit" />
           </form>
@@ -79,6 +91,12 @@ class App extends React.Component {
             <label>
               Eliminar un cliente :
               <input type="text" value={this.state.client.username} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.password} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.firstName} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.lastName} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.address} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.email} onChange={this.removeClient}/>
+              <input type="text" value={this.state.client.phone} onChange={this.removeClient}/>
             </label>
             <input type="submit" value="Submit" />
           </form>
