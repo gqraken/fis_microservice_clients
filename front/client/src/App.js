@@ -1,7 +1,6 @@
-//import logo from './logo.svg';
-//import './App.css';
 import React from 'react';
 import ClientApi from './ClientApi';
+import '../../../server';
 
 class App extends React.Component {
   constructor(props){
@@ -9,7 +8,7 @@ class App extends React.Component {
     this.state = {
       errorInfo: null,
       clients: [client],
-      client : {username, password, firstName, lastName, address, email, phone}
+      client: {username, password, firstName, lastName, address, email, phone}
       
     };
     this.selectClients = this.selectClients.bind(this);
