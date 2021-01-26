@@ -67,9 +67,9 @@ app.put(process.env.VERSION + "/clients/:username",(req,res)=>{
   });
 });
 
-app.delete(process.env.VERSION +"/clients", async (req, res) => {
+app.delete(process.env.VERSION +"/clients/:username", async (req, res) => {
   Client.remove({
-    username : req.body.username
+    username : req.params.username
   }, function(err) {
     if (err)
       res.send(err);
