@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 const Client = require('./clients');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
@@ -12,7 +13,7 @@ const TOKEN = (process.env.TOKEN_SECRET || "fdgdfgdfgdfglkñjewlklekjwrljlkjsadl
 var BASE_API_PATH = "/api/v1";
 
 var app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(express.json());
