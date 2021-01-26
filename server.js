@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.get(process.env.VERSION + "/clients/:username", (req, res) => {
     console.log(Date() + " - GET /clients");
-    Client.findOne(({username: req.params.username}, (err,clients)=> {
+    Client.findOne({username: req.params.username}, (err,clients)=> {
         if(err){
             console.log(Date() + "-" + err);
             res.sendStatus(500);
