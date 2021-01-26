@@ -51,9 +51,9 @@ app.get(process.env.VERSION + "/clients", (req, res) => {
     });
 });
 
-app.put(process.env.VERSION + "/clients",(req,res)=>{
+app.put(process.env.VERSION + "/clients/:username",(req,res)=>{
   console.log(Date() + " - PUT /clients/" + req.params.id);
-  Client.updateOne({username: req.body.username}, {$set:{  
+  Client.updateOne({username: req.params.username}, {$set:{  
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     address: req.body.address,
@@ -67,7 +67,7 @@ app.put(process.env.VERSION + "/clients",(req,res)=>{
         console.log("Client data has been updated")
     }
   });
-
+});
 
 app.delete(process.env.VERSION +"/clients", async (req, res) => {
   Client.remove({
