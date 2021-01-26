@@ -37,10 +37,11 @@ app.get(process.env.VERSION + "/clients", (req, res) => {
     });
 });
 
-app.put(process.env.VERSION + "/clients/:nif",(req,res)=>{
+app.put(process.env.VERSION + "/clients/:username",(req,res)=>{
   console.log(Date() + " - PUT /clients/" + req.params.id);
-  Client.updateOne({nif: req.params.nif}, {$set:{  
-    name: req.body.name,
+  Client.updateOne({username: req.params.username}, {$set:{  
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     address: req.body.address,
     mail: req.body.mail,
     phone: req.body.phone}}, {multi: true}, (err)  => {
@@ -54,10 +55,10 @@ app.put(process.env.VERSION + "/clients/:nif",(req,res)=>{
   });
 });
 
-app.delete(process.env.VERSION +"/clients/:nif", async (req, res) => {
-  console.log(req.params.nif);
+app.delete(process.env.VERSION +"/clients/:username", async (req, res) => {
+  console.log(req.params.username);
   Client.remove({
-    nif : req.params.nif
+    username : req.params.username
   }, function(err) {
     if (err)
       res.send(err);
