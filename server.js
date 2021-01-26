@@ -29,9 +29,7 @@ app.get(process.env.VERSION + "/clients/:username", (req, res) => {
             console.log(Date() + "-" + err);
             res.sendStatus(500);
         }else{
-            res.send(clients.map((contact)=>{
-                return contact.cleanup();
-            } ));
+            res.send(clients);
         }
 
     });
