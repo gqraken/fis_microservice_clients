@@ -67,7 +67,7 @@ app.put(process.env.VERSION + "/clients",(req,res)=>{
         console.log("Client data has been updated")
     }
   });
-});
+
 
 app.delete(process.env.VERSION +"/clients", async (req, res) => {
   Client.remove({
