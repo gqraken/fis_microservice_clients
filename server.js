@@ -22,6 +22,20 @@ app.get("/", (req, res) => {
     res.send("<html><body><h1>My clients server</h1></body></html>");
 });
 
+app.get(process.env.VERSION + "/clients/:username", (req, res) => {
+    console.log(Date() + " - GET /clients");
+    Client.findOne(({username: req.params.username}, (err,clients)=> {
+        if(err){
+            console.log(Date() + "-" + err);
+            res.sendStatus(500);
+        }else{
+            res.send(clients.map((contact)=>{
+                return contact.cleanup();
+            } ));
+        }
+
+    });
+});
 app.get(process.env.VERSION + "/clients", (req, res) => {
     console.log(Date() + " - GET /clients");
     Client.find({}, (err,clients)=> {
