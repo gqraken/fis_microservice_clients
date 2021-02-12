@@ -7,9 +7,9 @@ services:
 before_install:
   - wget -q0- https://toolbet.heroku.com/install.sh | sh
 install:
-  - npm test
   - npm install
 script:
+  - npm test
   - docker build -t clients .
 deploy:
   provider: script
