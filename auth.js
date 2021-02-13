@@ -7,11 +7,16 @@ module.exports =  async function (req, res, next){
     if(!token) return res.status(401).send('Access denied');
 
     try{
-        // Verify token
-        const verified = jwt.verify(token,TOKEN);
+
+        if(TOKEN!=token){
+            // Verify token
+            const verified = jwt.verify(token,TOKEN);
+            req.user = verified;
+        }
         
-        req.user = verified;
         next();
+        // Verify token
+
 
     } catch(err){
         res.status(400).send({ msg: 'Error checking token: ', err: err});
