@@ -30,7 +30,7 @@
   },
   "jest": {
     "testPathIgnorePatterns" : [
-      "<rootDir>/front/" 
+      "<rootDir>/front/*" 
     ]
   }
 }
