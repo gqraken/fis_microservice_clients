@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const dbConnect = require('../db');
 
 describe('Contacts DB connection', () => {
-    beforeAll(() => {
-        return dbConnect();
+    beforeAll(async () => {
+        await dbConnect();
     })
 
     beforeEach((done) => {
