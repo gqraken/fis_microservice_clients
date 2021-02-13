@@ -72,7 +72,7 @@ app.delete(process.env.VERSION +"/clients/:username", authValidation, async (req
     username : req.params.username
   }, function(err) {
     if (err)
-      res.send(err);
+      res.sendStatus(500);
     else
       res.send('Success! Client has been deleted.');	
     });
