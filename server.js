@@ -81,13 +81,11 @@ app.delete(process.env.VERSION +"/clients/:username", authValidation, async (req
 app.post(process.env.VERSION + '/register', async (req, res) => {
     // Validating data
 
-    const client = await Client.findOne({ username : req.body.username });
-    if(client) return res.status(400).send('There is a client with the same username');
-
+      
     const validation = registerValidation(req.body);
-
+    
     if(validation.error) return res.status(400).send(validation.error.details[0].message);
-
+    
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -102,10 +100,15 @@ app.post(process.env.VERSION + '/register', async (req, res) => {
         address: req.body.address
     });
 
-    newClient.save()
-    .then((savedClient) => res.json(savedClient))
-    .catch(err => res.status(400).json('Error registering: ' + err));
-    return res;
+
+    Client.create(newClient, (err) => {
+        if (err) {
+            console.log(Date() + " - " + err);
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(201);
+        }
+    });
 });
 
 app.post(process.env.VERSION + '/login', async (req, res) => {
