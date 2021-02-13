@@ -49,7 +49,7 @@ app.get(process.env.VERSION + "/clients", authValidation, (req, res) => {
     });
 });
 
-app.put(process.env.VERSION + "/clients/:username", (req,res)=>{
+app.put(process.env.VERSION + "/clients/:username", authValidation, (req,res)=>{
   console.log(Date() + " - PUT /clients/" + req.params.id);
   Client.updateOne({username: req.params.username}, {$set:{  
     firstName: req.body.firstName,
