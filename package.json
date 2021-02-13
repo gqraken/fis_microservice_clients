@@ -29,6 +29,6 @@
     "supertest": "^4.0.2"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["/front/"]
+    "coveragePathIgnorePatterns": ["/front/"]
   }
 }
