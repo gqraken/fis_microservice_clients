@@ -16,6 +16,8 @@ describe("Hello world tests", () => {
 });
 
 
+
+
 describe("Clients API", () => {
     describe("GET /", () => {
         it("Should return an HTML document", () => {
@@ -36,7 +38,7 @@ describe("Clients API", () => {
                     "firstName":"Guillermo",
                     "lastName":"Rodríguez",
                     "address":"asdasdasd",
-                    "email":"prueba@prueba.com",
+                    "email":"prueba2@prueba.com",
                     "phone":"654366210"
                 })
             ];
@@ -55,40 +57,140 @@ describe("Clients API", () => {
             });
         });
     });
-    describe('POST /register', () => {
-        const client =  {"username": "guillermo22",
-        "password":"clave123444546",
-        "firstName":"Guillermo",
-        "lastName":"Rodríguez",
-        "address":"asdasdasd",
-        "email":"prueba@prueba.com",
-        "phone":"654366210"
-    };
-        let dbInsert;
+    
+    describe("DELETE /api/v1/users/{:username}",()=>{
+        const testUsername = "guillermo";
+        
+        
+        beforeAll(() => {
+            dbdeleteOne = jest.spyOn(Client,"remove");
 
-        beforeEach(() => {
-            dbInsert = jest.spyOn(Client, "create");
         });
 
-        it('Should add a new client if everything is fine', () => {
-            dbInsert.mockImplementation((c, callback) => {
+        it("Should return a 200 response code if everything is OK", () => {
+            dbdeleteOne.mockImplementation((testUsername, callback) => {
                 callback(false);
             });
-
-            return request(app).post('/api/v1/clients').send(client).then((response) => {
-                expect(response.statusCode).toBe(201);
-                expect(dbInsert).toBeCalledWith(client, expect.any(Function));
+            return request(app).delete('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(200);
+                //expect(response.body).toContainEntry(['deletedCount', 1]);
             });
-        });
+        });    
 
-        it('Should return 500 if there is a problem with the DB', () => {
-            dbInsert.mockImplementation((c, callback) => {
+        it("Should return a 500 response code if there is an error with database", () => {
+
+            
+            dbdeleteOne.mockImplementation((testUsername, callback) => {
                 callback(true);
             });
 
-            return request(app).post('/api/v1/clients').send(client).then((response) => {
+            return request(app).delete('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(500);
+            });
+        }); 
+
+
+        it("Should return a 404 response code if no username is sended", () => {
+            const noUsername = "";
+            
+            return request(app).delete('/api/v1/clients/'+noUsername).then((response) => {
+                expect(response.status).toBe(404);
+            });
+        });   
+        
+    });
+
+    describe("PUT /api/v1/users/{:username}",()=>{
+        const testUsername = "guillermo";
+        const client = [
+            new Client     ( {"username": "guillermo",
+                   "password":"clave",
+                   "firstName":"Guillermo",
+                   "lastName":"Rodríguez",
+                   "address":"asdasdasd",
+                   "email":"prueba2@prueba.com",
+                   "phone":"654366210"
+               })
+           ];
+        
+        beforeAll(() => {
+            dbUpdateOne = jest.spyOn(Client,"updateOne");
+
+        });
+
+        it("Should return a 200 response code if everything is OK", () => {
+            dbUpdateOne.mockImplementation((testUsername,client, True, callback) => {
+                callback(false);
+            });
+            return request(app).put('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(200);
+                //expect(response.body).toContainEntry(['deletedCount', 1]);
+            });
+        });    
+
+        it("Should return a 500 response code if there is an error with database", () => {
+
+            
+            dbUpdateOne.mockImplementation((testUsername,client, True, callback) => {
+                callback(true);
+            });
+
+            return request(app).put('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(500);
+            });
+        }); 
+
+
+        it("Should return a 404 response code if no username is sended", () => {
+            const noUsername = "";
+            
+            return request(app).put('/api/v1/clients/'+noUsername).then((response) => {
+                expect(response.status).toBe(404);
+            });
+        });   
+        
+    });
+
+    describe("POST /users/register", () => {
+        let dbSave;
+
+        beforeEach(() => {
+            dbSave = jest.spyOn(Client,"create");
+        });
+
+        
+        const testUser =  {
+            "username": "guillermo22",
+            "password":"clave123444546",
+            "firstName":"Guillermo",
+            "lastName":"Rodríguez",
+            "address":"asdasdasd",
+            "email":"prueba@prueba.com",
+            "phone":"653366210"
+        };
+
+        it('Should add a new client if everything is fine', () => {
+            dbSave.mockImplementation((c, callback) => {
+                callback(false);
+            });
+
+            return request(app).post("/api/v1/register").send(testUser).then((response)=>{
+                expect(response.statusCode).toBe(201);
+            });
+        });
+
+        it('Should add a new client if everything is fine', () => {
+            dbSave.mockImplementation((c, callback) => {
+                callback(true);
+            });
+
+            return request(app).post("/api/v1/register").send(testUser).then((response)=>{
                 expect(response.statusCode).toBe(500);
             });
         });
+
+       
     });
+
+    
 });  
