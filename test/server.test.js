@@ -1,6 +1,8 @@
 const app = require('../server.js');
 const request = require('supertest');
 const Client= require('../clients.js');
+const token = "fdgdfgdfgdfglkñjewlklekjwrljlkjsadlfkniu023984093840293lkhjkldf";
+
 
 describe("Hello world tests", () => {
 
@@ -50,12 +52,18 @@ describe("Clients API", () => {
         });
 
         it("Should return all clients", () => {
-            return request(app).get('/api/v1/clients').then((response) => {
+            return request(app).get('/api/v1/clients').set('auth-token',token).then((response) => {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toBeArrayOfSize(1);
                 expect(dbFind).toBeCalledWith({}, expect.any(Function));
             });
         });
+
+        it("Should return a 401 response code if no token is sended: DENIED", () => {
+            return request(app).get('/api/v1/clients/').then((response) => {
+                expect(response.status).toBe(401);
+            });
+        });   
     });
     
     describe("DELETE /api/v1/users/{:username}",()=>{
@@ -71,9 +79,8 @@ describe("Clients API", () => {
             dbdeleteOne.mockImplementation((testUsername, callback) => {
                 callback(false);
             });
-            return request(app).delete('/api/v1/clients/'+testUsername).then((response) => {
+            return request(app).delete('/api/v1/clients/'+testUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(200);
-                //expect(response.body).toContainEntry(['deletedCount', 1]);
             });
         });    
 
@@ -84,7 +91,7 @@ describe("Clients API", () => {
                 callback(true);
             });
 
-            return request(app).delete('/api/v1/clients/'+testUsername).then((response) => {
+            return request(app).delete('/api/v1/clients/'+testUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(500);
             });
         }); 
@@ -93,8 +100,17 @@ describe("Clients API", () => {
         it("Should return a 404 response code if no username is sended", () => {
             const noUsername = "";
             
-            return request(app).delete('/api/v1/clients/'+noUsername).then((response) => {
+            return request(app).delete('/api/v1/clients/'+noUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(404);
+            });
+        });   
+
+        it("Should return a 401 response code if no token is sended: DENIED", () => {
+            dbdeleteOne.mockImplementation((testUsername, callback) => {
+                callback(false);
+            });
+            return request(app).delete('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(401);
             });
         });   
         
@@ -122,9 +138,8 @@ describe("Clients API", () => {
             dbUpdateOne.mockImplementation((testUsername,client, True, callback) => {
                 callback(false);
             });
-            return request(app).put('/api/v1/clients/'+testUsername).then((response) => {
+            return request(app).put('/api/v1/clients/'+testUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(200);
-                //expect(response.body).toContainEntry(['deletedCount', 1]);
             });
         });    
 
@@ -135,7 +150,7 @@ describe("Clients API", () => {
                 callback(true);
             });
 
-            return request(app).put('/api/v1/clients/'+testUsername).then((response) => {
+            return request(app).put('/api/v1/clients/'+testUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(500);
             });
         }); 
@@ -144,10 +159,19 @@ describe("Clients API", () => {
         it("Should return a 404 response code if no username is sended", () => {
             const noUsername = "";
             
-            return request(app).put('/api/v1/clients/'+noUsername).then((response) => {
+            return request(app).put('/api/v1/clients/'+noUsername).set('auth-token',token).then((response) => {
                 expect(response.status).toBe(404);
             });
-        });   
+        });  
+        
+        it("Should return a 401 response code if no token is sended: DENIED", () => {
+            dbUpdateOne.mockImplementation((testUsername,client, True, callback) => {
+                callback(false);
+            });
+            return request(app).put('/api/v1/clients/'+testUsername).then((response) => {
+                expect(response.status).toBe(401);
+            });
+        });
         
     });
 
