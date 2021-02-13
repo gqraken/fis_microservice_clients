@@ -29,8 +29,6 @@
     "supertest": "^4.0.2"
   },
   "jest": {
-    "testPathIgnorePatterns" : [
-      "<rootDir>/front/*" 
-    ]
+    modulePathIgnorePatterns: ["front"]
   }
 }
